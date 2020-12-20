@@ -9,13 +9,12 @@ ctx.verify_mode = ssl.CERT_NONE
 
 url = input('Enter - ')
 data = urllib.request.urlopen(url, context=ctx).read()
+tree =  ET.fromstring(data)
+tags = tree.findall('comments/comment')
+print(tags)
 
-info = json.loads(data)
-#print('User count:', len(info))
-c=0
-for item in info['comments']:
-    print('Name', item['name'])
-    print('count', item['count'])
-    c = c + item['count']
-
-print(c)
+s = 0
+for tag in tags :
+    c = tag.find('count')
+    s = s + int(c.text)
+print(s)
